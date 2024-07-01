@@ -1,0 +1,138 @@
+<div class="col-12" [innerHTML]="messageBox"></div>
+@switch(currentMenu){
+@case('table'){
+<div class="col-md-12 text-end">
+  <a class="btn btn-primary" (click)="menu('add')"><i class="fa-solid fa-user-plus"></i> Add </a>
+</div>
+<div class="col-12 pt-1">
+
+  <table class="table table-bordered  table-striped-columns">
+    <thead>
+      <tr>
+        <th>Sr. No.</th>
+        <th>Name</th>
+        <th>Contact Info</th>
+        <th>Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      @for(value of supplier ; track value ; let i = $index){
+      <tr>
+        <td>{{ i + 1 }} </td>
+        <td>{{ value.name }}</td>
+        <td  [innerHTML]="value.contact_info"></td>
+        <td> <a (click)="editMenu(value._id)"> <i class="fa-solid fa-pen-to-square"></i> </a>
+          <a (click)="deleteSupplier(value._id)"><i class="fa-solid fa-trash"></i></a>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+}
+@case('add'){
+
+<div class="col-md-12 d-flex mt-1">
+  <div class="col-md-6">
+    <h5 class="text-start px-2">Add Supplier</h5>
+  </div>
+  <div class="col-md-6 text-end">
+    <a class="btn btn-primary " (click)="menu('table')"><i class="fa-solid fa-user"></i> Supplier </a>
+
+  </div>
+
+</div>
+<div class="card mt-1">
+
+  <div class="d-flex justify-content-center p-2">
+    <div class="col-12 col-md-6">
+      <form [formGroup]="editSupplierForm" (ngSubmit)="storeSupplier()">
+        <div class="col-12">
+          <label>Supplier Name</label>
+          <input type="text" class="form-control" formControlName="name" />
+          @if(supplierForm.controls['name'].touched && supplierForm.controls['name']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> name required </p>
+          }
+          @if( supplierForm.controls['name'].touched && supplierForm.controls['name']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+        <div class="col-12">
+          <label> Contact Info</label>
+          <textarea type="text" class="form-control" formControlName="contact_info"  rows="4"></textarea>
+          @if(supplierForm.controls['contact_info'].touched && supplierForm.controls['contact_info']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> contact_info required </p>
+          }
+          @if(supplierForm.controls['contact_info'].touched && supplierForm.controls['contact_info']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+        
+
+        
+        
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary mt-2" [disabled]="supplierForm.invalid">Submit </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+}
+@case('edit'){
+
+<div class="col-md-12 d-flex mt-1">
+  <div class="col-md-6">
+    <h5 class="text-start px-2">Edit Supplier</h5>
+  </div>
+  <div class="col-md-6 text-end">
+    <a class="btn btn-primary " (click)="menu('table')"><i class="fa-solid fa-user"></i> Supplier </a>
+
+  </div>
+
+</div>
+<div class="card mt-1">
+
+  <div class="d-flex justify-content-center p-2">
+    <div class="col-12 col-md-6">
+      <form [formGroup]="editSupplierForm" (ngSubmit)="updateSupplier()">
+        <div class="col-12">
+          <label>Supplier Name</label>
+          <input type="text" class="form-control" formControlName="name" />
+          @if(editSupplierForm.controls['name'].touched && editSupplierForm.controls['name']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> name required </p>
+          }
+          @if( editSupplierForm.controls['name'].touched && editSupplierForm.controls['name']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+        <div class="col-12">
+          <label> Contact Info</label>
+          <textarea type="text" class="form-control" formControlName="contact_info"  rows="4"></textarea>
+          @if(editSupplierForm.controls['contact_info'].touched && editSupplierForm.controls['contact_info']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> contact_info required </p>
+          }
+          @if(editSupplierForm.controls['contact_info'].touched && editSupplierForm.controls['contact_info']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+       
+
+        
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary mt-2" [disabled]="editSupplierForm.invalid">Update </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+}
+
+}

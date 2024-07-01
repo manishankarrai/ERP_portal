@@ -1,0 +1,59 @@
+
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// pending font size in rem for responsive
+
+a {
+     cursor: pointer;
+     font-weight: 300 !important;
+}
+
+.fa-pen-to-square {
+     color : rgb(109, 21, 190);
+     padding: 4px;
+}
+.fa-trash {
+    color: rgb(221, 15, 15);
+    padding: 4px;
+
+}
+p.text-danger {
+  color: rgb(221, 15, 15);
+
+}
+p.text-success {
+  color : rgb(109, 21, 190) !important;
+}
+
+h1, h2, h3, h4, h5, h6 , p , td  , label , input  , option , select {
+   // font-size: 1rem;
+    font-weight: 300 !important;
+  }
+  th {
+    font-weight: 400 !important;
+  }
+
+  select option:checked {
+     font-weight: 300 !important;
+     color: red;
+  }
+.btn.btn-primary {
+     background-color: rgb(109, 21, 190);
+     border: none;
+     font-size: 0.8rem;
+     border-radius: 2px;
+ }
+ .btn.btn-primary:hover {
+     background-color: rgb(75, 20, 128);
+     border: none;
+ }
+ .btn.btn-primary:disabled {
+     background-color: rgb(221, 15, 15);
+     border: none;
+ }
+ 
+  

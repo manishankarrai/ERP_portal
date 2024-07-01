@@ -1,0 +1,64 @@
+
+<div class="page-start" >
+    <div class="page-sidenv" *ngIf="dashboardBool$">
+        <div class="page-logo">
+            <img src="assets/logo/erplogo.png" alt="logo" />
+        </div>
+        <div class="page-sidenavbar">
+            <div class="sidebar">
+                <ul class="menu">
+                    <li class="menu-item"  > <mat-icon>home</mat-icon> 
+                        <a  routerLink="admin/dashboard"  routerLinkActive="active">Dashboard</a></li>
+                    <li class="menu-item"> <mat-icon>person</mat-icon>
+                        <a routerLink="admin/employee" routerLinkActive="active">Employee</a></li>
+                    <li class="menu-item"> <mat-icon>inventory_2</mat-icon> <a href="#">Product</a></li>
+                    <li class="menu-item"><mat-icon>logout</mat-icon> <a (click)="logout()">Logout</a></li>
+
+                </ul>
+            </div>
+
+
+
+        </div>
+
+    </div>
+    <div class="page-main-containt-area">
+
+        <div class="header-tag" *ngIf="dashboardBool$">
+            <header>
+                <ul>
+                    <!-- <li> Home </li>
+                    <li> About </li> -->
+                    <li id="show_and_hide_sidebar" (click)="openCloseSidenav()"> <mat-icon>{{ menuOpenCloseIcon}}</mat-icon> </li>
+                    <li class="profile-on-dashboard-show profile-dropdown">
+                        <img src="assets/logo/tom.jpeg" alt="logo" />
+                        <p class="profile-dropbtn"> {{ username$ }} </p>
+                        <div class="">
+                            <div class="profile-dropdown-content">
+                                <a href="#"><i class="fa fa-chart-line"></i> Link 1 </a>
+                                <a href="#"><i class="fa fa-check"></i>Link 2</a>
+                                <hr>
+                                <mat-icon>logout</mat-icon> <a (click)="logout()">Logout</a>
+                              </div>
+                        </div>
+                    </li>
+                </ul>
+            </header>
+        </div>
+        <div class="main-content">
+            <div class="current-menu-name"  *ngIf="dashboardBool$">
+
+                <h5>Dashboard</h5>
+                <div class="current-menu-url">
+                    <p>dashboard > index</p>
+                </div>
+            </div>
+            <div class="main-body">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

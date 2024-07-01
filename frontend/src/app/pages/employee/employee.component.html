@@ -1,0 +1,180 @@
+<div class="col-12" [innerHTML]="messageBox"></div>
+@switch(currentMenu){
+@case('table'){
+<div class="col-md-12 text-end">
+  <a class="btn btn-primary" (click)="menu('add')"><i class="fa-solid fa-user-plus"></i> Add </a>
+</div>
+<div class="col-12 pt-1">
+
+  <table class="table table-bordered  table-striped-columns">
+    <thead>
+      <tr>
+        <th>Sr. No.</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      @for(employee of allEmployee ; track employee ; let i = $index){
+      <tr>
+        <td>{{ i + 1 }} </td>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.role }}</td>
+        <td> <a (click)="editMenu(employee._id)"> <i class="fa-solid fa-pen-to-square"></i> </a>
+          <a (click)="deleteEmployee(employee._id)"><i class="fa-solid fa-trash"></i></a>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+}
+@case('add'){
+
+<div class="col-md-12 d-flex mt-1">
+  <div class="col-md-6">
+    <h5 class="text-start px-2">Add Employee</h5>
+  </div>
+  <div class="col-md-6 text-end">
+    <a class="btn btn-primary " (click)="menu('table')"><i class="fa-solid fa-user"></i> Employee </a>
+
+  </div>
+
+</div>
+<div class="card mt-1">
+
+  <div class="d-flex justify-content-center p-2">
+    <div class="col-12 col-md-6">
+      <form [formGroup]="userForm" (ngSubmit)="storeEmployee()">
+        <div class="col-12">
+          <label>Employee Name</label>
+          <input type="text" class="form-control" formControlName="name" />
+          @if(userForm.controls['name'].touched && userForm.controls['name']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> name required </p>
+          }
+          @if( userForm.controls['name'].touched && userForm.controls['name']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+        <div class="col-12">
+          <label>Email</label>
+          <input type="email" class="form-control" formControlName="email" />
+          @if(userForm.controls['email'].touched && userForm.controls['email']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> email required </p>
+          }
+          @if(userForm.controls['email'].touched && userForm.controls['email']?.errors?.['email']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> email is not valid </p>
+
+          }
+        </div>
+        <div class="col-12">
+          <label>Password</label>
+          <input type="password" class="form-control" formControlName="password" />
+        </div>
+        @if(userForm.controls['password'].touched && userForm.controls['password']?.errors?.['required']){
+        <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> PASSWORD required </p>
+        }
+        @if(userForm.controls['password'].touched && userForm.controls['password']?.errors?.['minlength']){
+        <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 6 </p>
+
+        }
+
+        <div class="col-12">
+          <label>Role</label>
+          <select class="form-select" formControlName="role">
+            <option value="" selected>Select</option>
+            <option value="employee">Employee</option>
+            <option value="manager">Manager</option>
+
+          </select>
+
+        </div>
+        @if(userForm.controls['role'].touched && userForm.controls['role']?.errors?.['required']){
+        <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> role required </p>
+        }
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary mt-2" [disabled]="userForm.invalid">Submit </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+}
+@case('edit'){
+
+<div class="col-md-12 d-flex mt-1">
+  <div class="col-md-6">
+    <h5 class="text-start px-2">Edit Employee</h5>
+  </div>
+  <div class="col-md-6 text-end">
+    <a class="btn btn-primary " (click)="menu('table')"><i class="fa-solid fa-user"></i> Employee </a>
+
+  </div>
+
+</div>
+<div class="card mt-1">
+
+  <div class="d-flex justify-content-center p-2">
+    <div class="col-12 col-md-6">
+      <form [formGroup]="editUserForm" (ngSubmit)="updateEmployee()">
+        <div class="col-12">
+          <label>Employee Name</label>
+          <input type="text" class="form-control" formControlName="name" />
+          @if(editUserForm.controls['name'].touched && editUserForm.controls['name']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> name required </p>
+          }
+          @if( editUserForm.controls['name'].touched && editUserForm.controls['name']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+        <div class="col-12">
+          <label>Email</label>
+          <input type="email" class="form-control" formControlName="email" />
+          @if(editUserForm.controls['email'].touched && editUserForm.controls['email']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> email required </p>
+          }
+          @if(editUserForm.controls['email'].touched && editUserForm.controls['email']?.errors?.['email']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> email is not valid </p>
+
+          }
+        </div>
+        <div class="col-12">
+          <label> New Password</label>
+          <input type="password" class="form-control" formControlName="password" />
+        </div>
+
+        @if(editUserForm.controls['password'].touched && editUserForm.controls['password']?.errors?.['minlength']){
+        <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 6 </p>
+        }
+
+        <div class="col-12">
+          <label>Role</label>
+          <select class="form-select" formControlName="role">
+            <option value="" selected>Select</option>
+            <option value="employee">Employee</option>
+            <option value="manager">Manager</option>
+
+          </select>
+
+        </div>
+        @if(editUserForm.controls['role'].touched && editUserForm.controls['role']?.errors?.['required']){
+        <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> role required </p>
+        }
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary mt-2" [disabled]="editUserForm.invalid">Update </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+}
+
+}

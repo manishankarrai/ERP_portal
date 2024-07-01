@@ -1,0 +1,207 @@
+<div class="col-12" [innerHTML]="messageBox"></div>
+@switch(currentMenu){
+@case('table'){
+<div class="col-md-12 text-end">
+  <a class="btn btn-primary" (click)="menu('add')"><i class="fa-solid fa-user-plus"></i> Add </a>
+</div>
+<div class="col-12 pt-1">
+
+  <table class="table table-bordered  table-striped-columns">
+    <thead>
+      <tr>
+        <th>Sr. No.</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Currency</th>
+        <th>Purchase Price</th>
+        <th>Selling Price</th>
+
+        <th>Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      @for(value of product ; track value ; let i = $index){
+      <tr>
+        <td>{{ i + 1 }} </td>
+        <td>{{ value.name }}</td>
+        <td [innerHTML]="value.description"></td>
+        <td>{{ value.currency }}</td>
+        <td>{{ value.purchage_price }}</td>
+        <td>{{ value.selling_price }}</td>
+        <td> <a (click)="editMenu(value._id)"> <i class="fa-solid fa-pen-to-square"></i> </a>
+          <a (click)="deleteProduct(value._id)"><i class="fa-solid fa-trash"></i></a>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+}
+@case('add'){
+
+<div class="col-md-12 d-flex mt-1">
+  <div class="col-md-6">
+    <h5 class="text-start px-2">Add Product</h5>
+  </div>
+  <div class="col-md-6 text-end">
+    <a class="btn btn-primary " (click)="menu('table')"><i class="fa-solid fa-user"></i> Product </a>
+
+  </div>
+
+</div>
+<div class="card mt-1">
+
+  <div class="d-flex justify-content-center p-2">
+    <div class="col-12 col-md-6">
+      <form [formGroup]="productForm" (ngSubmit)="storeProduct()">
+        <div class="col-12">
+          <label>Product Name</label>
+          <input type="text" class="form-control" formControlName="name" />
+          @if(productForm.controls['name'].touched && productForm.controls['name']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> name required </p>
+          }
+          @if( productForm.controls['name'].touched && productForm.controls['name']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+        <div class="col-12">
+          <label> Description </label>
+          <textarea type="text" class="form-control" formControlName="description" rows="4"></textarea>
+          @if(productForm.controls['description'].touched && productForm.controls['description']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> description required </p>
+          }
+          @if(productForm.controls['description'].touched &&
+          productForm.controls['description']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 10 </p>
+
+          }
+        </div>
+        <div class="col-12 row">
+
+        <div class="col-4">
+          <label>Currency</label>
+          <select type="text" class="form-select" formControlName="currency" >
+            <option value=""  selected>Select </option>
+            <option value="$" >$</option>
+            <option value="Rs" >Rs </option>
+
+
+        </select>
+          @if(productForm.controls['currency'].touched && productForm.controls['currency']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> currency required </p>
+          }
+        </div>
+        <div class="col-4">
+          <label>Purchase Price</label>
+          <input type="text" class="form-control" formControlName="purchage_price" />
+          @if(productForm.controls['purchage_price'].touched && productForm.controls['purchage_price']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> purchage_price required </p>
+          }
+        </div>
+        <div class="col-4">
+          <label>Selling Price</label>
+          <input type="text" class="form-control" formControlName="selling_price" />
+          @if(productForm.controls['selling_price'].touched && productForm.controls['selling_price']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> selling_price required </p>
+          }
+        </div>
+        </div>
+
+
+
+
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary mt-2" [disabled]="productForm.invalid">Submit </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+}
+@case('edit'){
+
+<div class="col-md-12 d-flex mt-1">
+  <div class="col-md-6">
+    <h5 class="text-start px-2">Edit Product</h5>
+  </div>
+  <div class="col-md-6 text-end">
+    <a class="btn btn-primary " (click)="menu('table')"><i class="fa-solid fa-user"></i> Product </a>
+
+  </div>
+
+</div>
+<div class="card mt-1">
+
+  <div class="d-flex justify-content-center p-2">
+    <div class="col-12 col-md-6">
+      <form [formGroup]="editProductForm" (ngSubmit)="updateProduct()">
+        <div class="col-12">
+          <label>Product Name</label>
+          <input type="text" class="form-control" formControlName="name" />
+          @if(editProductForm.controls['name'].touched && editProductForm.controls['name']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> name required </p>
+          }
+          @if( editProductForm.controls['name'].touched && editProductForm.controls['name']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+        <div class="col-12">
+          <label> Description </label>
+          <textarea type="text" class="form-control" formControlName="description" rows="4"></textarea>
+          @if(editProductForm.controls['description'].touched && editProductForm.controls['description']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> description required </p>
+          }
+          @if(editProductForm.controls['description'].touched &&
+          editProductForm.controls['description']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 10 </p>
+
+          }
+        </div>
+        <div class="col-12 row">
+
+        <div class="col-4">
+          <label>Currency</label>
+          <select type="text" class="form-select" formControlName="currency" >
+            <option value="" >Select </option>
+            <option value="$" >$</option>
+            <option value="Rs" >Rs </option>
+
+
+        </select>
+          @if(editProductForm.controls['currency'].touched && editProductForm.controls['currency']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> currency required </p>
+          }
+        </div>
+        <div class="col-4">
+          <label>Purchase Price</label>
+          <input type="text" class="form-control" formControlName="purchage_price" />
+          @if(editProductForm.controls['purchage_price'].touched && editProductForm.controls['purchage_price']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> purchage_price required </p>
+          }
+        </div>
+        <div class="col-4">
+          <label>Selling Price</label>
+          <input type="text" class="form-control" formControlName="selling_price" />
+          @if(editProductForm.controls['selling_price'].touched && editProductForm.controls['selling_price']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> selling_price required </p>
+          }
+        </div>
+        </div>
+
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary mt-2" [disabled]="editProductForm.invalid">Update </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+}
+
+}

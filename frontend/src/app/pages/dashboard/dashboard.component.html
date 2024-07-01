@@ -1,0 +1,75 @@
+<div class="container-fluid container-fluid-fullwidth">
+    <div class="row row-no-padding">
+        @if(dashboardBool$){
+        <div class="col-md-2 sidebar">
+            <div class="col-md-12 text-center">
+                <img src="assets/logo/erplogo.png" alt="logo" height="60" />
+            </div>
+            <hr class="custom-hr">
+
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="admin/dashboard" routerLinkActive="active"> <i
+                            class="fas fa-home"></i>Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="admin/employee" routerLinkActive="active"><i
+                            class="fa-solid fa-address-card"></i>Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="admin/supplier" routerLinkActive="active"><i
+                            class="fa-solid fa-address-card"></i>Supplier</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="admin/warehouse" routerLinkActive="active"><i
+                            class="fa-solid fa-address-card"></i>Warehouse</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="admin/product" routerLinkActive="active"><i
+                            class="fa-solid fa-address-card"></i>Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="logout()"><i
+                            class="fa-sharp fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+                </li>
+
+            </ul>
+        </div>
+        }
+        <div class="col-md-10 main-content">
+            @if(dashboardBool$){
+
+
+            <div class="col-md-12 header-tab">
+                <ul class="nav justify-content-end">
+
+                    <li class="nav-item">
+                        <a class="nav-link profile-class" >
+                            <img src="assets/logo/tom.jpeg" alt="logo" height="30" style="border-radius: 12%;" /> Amit
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="col-md-12 d-flex mt-1 custom-divider">
+                <div class="col-md-6">
+                    <h5 class="text-start px-2">{{ pageHeading$ }}</h5>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="text-end px-2">
+                       {{ currentPage$ }}
+                    </h6>
+                </div>
+
+            </div>
+        }
+
+            <div class="col-md-12 p-3">
+
+                <router-outlet></router-outlet>
+            </div>
+
+        </div>
+    </div>
+</div>

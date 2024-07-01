@@ -1,0 +1,140 @@
+<div class="col-12" [innerHTML]="messageBox"></div>
+@switch(currentMenu){
+@case('table'){
+<div class="col-md-12 text-end">
+  <a class="btn btn-primary" (click)="menu('add')"><i class="fa-solid fa-user-plus"></i> Add </a>
+</div>
+<div class="col-12 pt-1">
+
+  <table class="table table-bordered  table-striped-columns">
+    <thead>
+      <tr>
+        <th>Sr. No.</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      @for(value of warehouse ; track value ; let i = $index){
+      <tr>
+        <td>{{ i + 1 }} </td>
+        <td>{{ value.name }}</td>
+        <td  [innerHTML]="value.location"></td>
+        <td> <a (click)="editMenu(value._id)"> <i class="fa-solid fa-pen-to-square"></i> </a>
+          <a (click)="deleteWarehouse(value._id)"><i class="fa-solid fa-trash"></i></a>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+}
+@case('add'){
+
+<div class="col-md-12 d-flex mt-1">
+  <div class="col-md-6">
+    <h5 class="text-start px-2">Add Warehouse</h5>
+  </div>
+  <div class="col-md-6 text-end">
+    <a class="btn btn-primary " (click)="menu('table')"><i class="fa-solid fa-user"></i> Warehouse </a>
+
+  </div>
+
+</div>
+<div class="card mt-1">
+
+  <div class="d-flex justify-content-center p-2">
+    <div class="col-12 col-md-6">
+      <form [formGroup]="warehouseForm" (ngSubmit)="storeWarehouse()">
+        <div class="col-12">
+          <label>Warehouse Name</label>
+          <input type="text" class="form-control" formControlName="name" />
+          @if(warehouseForm.controls['name'].touched && warehouseForm.controls['name']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> name required </p>
+          }
+          @if( warehouseForm.controls['name'].touched && warehouseForm.controls['name']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+        <div class="col-12">
+          <label> Location</label>
+          <textarea type="text" class="form-control" formControlName="location"  rows="4"></textarea>
+          @if(warehouseForm.controls['location'].touched && warehouseForm.controls['location']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> location required </p>
+          }
+          @if(warehouseForm.controls['location'].touched && warehouseForm.controls['location']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+        
+
+        
+        
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary mt-2" 
+          [disabled]="warehouseForm.invalid"
+          >Submit </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+}
+@case('edit'){
+
+<div class="col-md-12 d-flex mt-1">
+  <div class="col-md-6">
+    <h5 class="text-start px-2">Edit Warehouse</h5>
+  </div>
+  <div class="col-md-6 text-end">
+    <a class="btn btn-primary " (click)="menu('table')"><i class="fa-solid fa-user"></i> Warehouse </a>
+
+  </div>
+
+</div>
+<div class="card mt-1">
+
+  <div class="d-flex justify-content-center p-2">
+    <div class="col-12 col-md-6">
+      <form [formGroup]="editWarehouseForm" (ngSubmit)="updateWarehouse()">
+        <div class="col-12">
+          <label>Warehouse Name</label>
+          <input type="text" class="form-control" formControlName="name" />
+          @if(editWarehouseForm.controls['name'].touched && editWarehouseForm.controls['name']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> name required </p>
+          }
+          @if( editWarehouseForm.controls['name'].touched && editWarehouseForm.controls['name']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+        <div class="col-12">
+          <label> Location</label>
+          <textarea type="text" class="form-control" formControlName="location"  rows="4"></textarea>
+          @if(editWarehouseForm.controls['location'].touched && editWarehouseForm.controls['location']?.errors?.['required']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> location required </p>
+          }
+          @if(editWarehouseForm.controls['location'].touched && editWarehouseForm.controls['location']?.errors?.['minlength']){
+          <p class="text-danger"> <i class="fa-solid fa-triangle-exclamation px-2"></i> minimum length is 3 </p>
+
+          }
+        </div>
+       
+
+        
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary mt-2" [disabled]="editWarehouseForm.invalid">Update </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+}
+
+}
